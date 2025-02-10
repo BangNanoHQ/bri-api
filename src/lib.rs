@@ -1,4 +1,5 @@
-pub mod bifast;
 pub mod auth;
+pub mod bifast;
 
-pub use bifast::v2;
+// Re-export commonly used types
+// pub use bifast::v2::BifastV2Client;

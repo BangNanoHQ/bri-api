@@ -1,5 +1,6 @@
 use reqwest::Client;
 use serde::{Deserialize, Serialize};
+pub mod client;
 
 pub struct BifastClient {
     client: Client,
@@ -25,3 +26,5 @@ pub struct ApiResponse<T> {
     pub data: Option<T>,
     pub message: Option<String>,
 }
+
+

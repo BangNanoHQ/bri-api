@@ -17,6 +17,7 @@ base64 = "0.21"
 dotenv = "0.15"
 rsa = { version = "0.9", features = ["sha2", "pem"] }
 rand = "0.8"
+hmac = "0.12"
 
 [dev-dependencies]
 mockito = "1.2"
