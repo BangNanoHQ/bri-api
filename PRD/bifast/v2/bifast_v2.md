@@ -8,7 +8,7 @@ This document outlines the requirements for building a **Rust-based API client**
 
 ## **2. Objectives**
 - Implement a **secure** Rust-based API client for **BRIAPI BI-Fast V2**.
-- Use **OAuth 2.0 with digital signatures** for authentication.
+- Use **OAuth 2.0 with Digital Signature authentication** for secure access.
 - Provide methods for:
   - **Account Inquiry** (`/v2.0/transfer-bifast/inquiry-bifast`)
   - **Fund Transfer** (`/v2.0/transfer-bifast/payment-bifast`)
@@ -19,16 +19,27 @@ This document outlines the requirements for building a **Rust-based API client**
 
 ## **3. API Overview**
 ### **3.1 Authentication (OAuth 2.0 with Digital Signature)**
+
+#### **Step 1: Obtain Access Token**
 - **Method:** `POST`
 - **Endpoint:** `/snap/v1.0/access-token/b2b`
 - **Headers:**
-  - `X-SIGNATURE`: Generated using SHA256withRSA.
+  - `X-SIGNATURE`: Generated using the client's private key.
   - `X-CLIENT-KEY`: The client's unique identifier.
-  - `X-TIMESTAMP`: ISO8601 timestamp.
+  - `X-TIMESTAMP`: The current timestamp in `yyyy-MM-ddTHH:mm:ss.SSSTZD` format (ISO8601).
+  - `Content-Type`: `application/json`
 - **Request Body:**
   ```json
-  { "grantType": "client_credentials" }
+  {
+    "grantType": "client_credentials"
+  }
   ```
+- **String to Sign:**
+  ```
+  client_id + "|" + X-TIMESTAMP
+  ```
+- **Signature Generation:**
+  - Use the RSA 2048-bit private key to sign the string using the `SHA256withRSA` algorithm.
 - **Response:**
   ```json
   {
@@ -38,53 +49,11 @@ This document outlines the requirements for building a **Rust-based API client**
   }
   ```
 
-### **3.2 Account Inquiry**
-- **Method:** `POST`
-- **Endpoint:** `/v2.0/transfer-bifast/inquiry-bifast`
-- **Request Example:**
-  ```json
-  {
-    "beneficiaryBankCode": "CENAIDJA",
-    "beneficiaryAccountNo": "99999"
-  }
-  ```
-- **Response Example:**
-  ```json
-  {
-    "responseCode": "2008100",
-    "responseMessage": "Successful",
-    "receiverName": "John Doe",
-    "beneficiaryBankCode": "CENAIDJA",
-    "currency": "IDR"
-  }
-  ```
-
-### **3.3 Fund Transfer**
-- **Method:** `POST`
-- **Endpoint:** `/v2.0/transfer-bifast/payment-bifast`
-- **Request Example:**
-  ```json
-  {
-    "customerReference": "0000004",
-    "sourceAccountNo": "001901000613303",
-    "amount": { "value": "23000.00", "currency": "IDR" },
-    "beneficiaryBankCode": "CENAIDJA",
-    "beneficiaryAccountNo": "2571075557",
-    "referenceNo": "20220929BRINIDJA51050005403"
-  }
-  ```
-
-### **3.4 Transaction Status Check**
-- **Method:** `POST`
-- **Endpoint:** `/v2.0/transfer-bifast/check-status-bifast`
-- **Request Example:**
-  ```json
-  {
-    "originalPartnerReferenceNo": "54321",
-    "serviceCode": "80",
-    "transactionDate": "2022-11-30T22:25:24+07:00"
-  }
-  ```
+#### **Step 2: Include in API Requests**
+- **Headers:**
+  - `Authorization`: `Bearer {access_token}`
+  - `X-SIGNATURE`: The generated signature.
+  - `X-TIMESTAMP`: The timestamp used in the signature.
 
 ---
 
@@ -99,19 +68,25 @@ This document outlines the requirements for building a **Rust-based API client**
 - **Test case 1:** Valid credentials return a valid access token.
 - **Test case 2:** Invalid credentials return an authentication error.
 - **Test case 3:** Expired token is rejected, requiring re-authentication.
+- **Test case 4:** Signature generation produces the correct RSA-SHA256 output.
+- **Test case 5:** Requests with missing/invalid signatures fail authentication.
 
-#### **4.2.2 Account Inquiry Tests**
+#### **4.2.2 API Request Validation**
+- **Test case 1:** `Authorization`, `X-SIGNATURE`, and `X-TIMESTAMP` headers are correctly included.
+- **Test case 2:** Invalid/missing headers result in proper rejection.
+
+#### **4.2.3 Account Inquiry Tests**
 - **Test case 1:** Valid account details return expected information.
 - **Test case 2:** Invalid account number returns an error.
 - **Test case 3:** Empty request body results in validation error.
 
-#### **4.2.3 Fund Transfer Tests**
+#### **4.2.4 Fund Transfer Tests**
 - **Test case 1:** Valid transfer request completes successfully.
 - **Test case 2:** Insufficient funds return a `4038014` error.
 - **Test case 3:** Invalid bank code returns a `4008101` error.
 - **Test case 4:** Exceeding transaction limit returns a `4038002` error.
 
-#### **4.2.4 Transaction Status Check Tests**
+#### **4.2.5 Transaction Status Check Tests**
 - **Test case 1:** Valid reference number returns the correct status.
 - **Test case 2:** Expired transaction reference returns `4048201`.
 - **Test case 3:** Incorrect reference format returns `4008201`.
@@ -137,23 +112,11 @@ fn test_authentication_success() {
 
 ## **5. Security Considerations**
 - **Store API credentials securely** using environment variables.
-- **Use Rust’s `hmac` and `sha2` crates** for signing API requests.
+- **Use Rust’s `rsa` and `sha2` crates** for signing API requests.
 - **Implement retry logic** for transient API errors.
 
 ---
 
-## **6. Milestones & Deliverables**
-| Milestone               | Expected Completion |
-|-------------------------|--------------------|
-| OAuth 2.0 Implementation | Week 1            |
-| Account Inquiry Feature  | Week 2            |
-| Fund Transfer Feature    | Week 3            |
-| Transaction Status Check | Week 4            |
-| Unit Test Development    | Week 5            |
-| Code Review & Finalization | Week 6         |
-
----
-
-## **7. Conclusion**
+## **6. Conclusion**
 This PRD defines the roadmap for building a **Rust-based API client** for **BRIAPI BI-Fast V2** with a robust testing strategy to ensure reliability and security.
 
