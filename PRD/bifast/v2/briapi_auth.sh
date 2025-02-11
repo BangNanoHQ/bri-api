@@ -64,6 +64,10 @@ echo "Inquiry Response: $INQUIRY_RESPONSE"
 # Fund Transfer
 echo "Performing Fund Transfer..."
 API_PATH="/v2.0/transfer-bifast/payment-bifast"
+
+# Generate timestamp for the transfer request
+TRANSFER_TIMESTAMP=$(date -u +"%Y-%m-%dT%H:%M:%S").$(printf "%03d" $(( $(date +%N) / 1000000 )))Z
+
 TRANSFER_REQUEST_BODY='{
   "customerReference": "0000004",
   "senderIdentityNumber": "3515085211930002",
@@ -76,7 +80,7 @@ TRANSFER_REQUEST_BODY='{
   "beneficiaryAccountNo": "2571075557",
   "referenceNo": "20220929BRINIDJA51050005403",
   "externalId": "54445790453",
-  "transactionDate": "2022-11-30T22:25:24+07:00",
+  "transactionDate": "'"$TRANSFER_TIMESTAMP"'",
   "paymentInfo": "Test Transfer",
   "senderType": "01",
   "senderResidentStatus": "01",
@@ -87,15 +91,17 @@ TRANSFER_REQUEST_BODY='{
     "isrdn": "true"
   }
 }'
+echo "Transfer Request Body: $TRANSFER_REQUEST_BODY"
 
-TIMESTAMP=$(date -u +"%Y-%m-%dT%H:%M:%S").$(printf "%03d" $(( $(date +%N) / 1000000 )))Z
-BODY_HASH=$(echo -n "$TRANSFER_REQUEST_BODY" | openssl dgst -sha256 | awk '{print $2}' | tr '[:upper:]' '[:lower:]')
-SIGNATURE=$(generate_signature "POST" "$API_PATH" "$ACCESS_TOKEN" "$BODY_HASH" "$TIMESTAMP" "$CLIENT_SECRET")
+TRANSFER_REQUEST_BODY_CLEANED=$(echo -n "$TRANSFER_REQUEST_BODY" | tr -d '\n' | jq -c .)
+
+BODY_HASH=$(echo -n "$TRANSFER_REQUEST_BODY_CLEANED" | openssl dgst -sha256 | awk '{print $2}' | tr '[:upper:]' '[:lower:]')
+SIGNATURE=$(generate_signature "POST" "$API_PATH" "$ACCESS_TOKEN" "$BODY_HASH" "$TRANSFER_TIMESTAMP" "$CLIENT_SECRET")
 
 TRANSFER_RESPONSE=$(curl -s -X POST "https://sandbox.partner.api.bri.co.id$API_PATH" \
   -H "Authorization: Bearer $ACCESS_TOKEN" \
   -H "Content-Type: application/json" \
-  -H "X-TIMESTAMP: $TIMESTAMP" \
+  -H "X-TIMESTAMP: $TRANSFER_TIMESTAMP" \
   -H "X-SIGNATURE: $SIGNATURE" \
   -H "X-PARTNER-ID: $PARTNER_ID" \
   -H "CHANNEL-ID: $CHANNEL_ID" \
