@@ -85,11 +85,13 @@ This document outlines the requirements for building a **Rust-based API client**
 - **Test case 2:** Insufficient funds return a `4038014` error.
 - **Test case 3:** Invalid bank code returns a `4008101` error.
 - **Test case 4:** Exceeding transaction limit returns a `4038002` error.
+- Add other test cases as much as possible
 
 #### **4.2.5 Transaction Status Check Tests**
 - **Test case 1:** Valid reference number returns the correct status.
 - **Test case 2:** Expired transaction reference returns `4048201`.
 - **Test case 3:** Incorrect reference format returns `4008201`.
+- Add other test cases as much as possible
 
 ### **4.3 Mock Response Handling**
 For each test, simulate API responses using `mockito`:
@@ -120,3 +122,6 @@ fn test_authentication_success() {
 ## **6. Conclusion**
 This PRD defines the roadmap for building a **Rust-based API client** for **BRIAPI BI-Fast V2** with a robust testing strategy to ensure reliability and security.
 
+## **7. Coding conventions***
+- Rust structs need to follow camelCase convention when serializing to JSON and deserializing from JSON.
+- There needs to be an example rust script so that it can be run manually.
