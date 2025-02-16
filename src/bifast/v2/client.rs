@@ -89,13 +89,16 @@ impl BifastV2Client {
         Ok(response.json::<InquiryResponse>().await?)
     }
 
-    pub async fn transfer(&self, request: TransferRequest) -> Result<TransferResponse, Box<dyn std::error::Error>> {
+    pub async fn transfer(&self, mut request: TransferRequest) -> Result<TransferResponse, Box<dyn std::error::Error>> {
         let access_token = self.auth_client.get_access_token().await?.access_token;
 
         let api_path = "/v2.0/transfer-bifast/payment-bifast";
         let timestamp = chrono::Utc::now()
+            .with_timezone(&chrono::FixedOffset::east(7 * 3600))
             .format("%Y-%m-%dT%H:%M:%S")
-            .to_string() + &format!(".{:03}Z", chrono::Utc::now().timestamp_subsec_millis());
+            .to_string() + &format!(".{:03}+07:00", chrono::Utc::now().timestamp_subsec_millis());
+
+        // request.transaction_date = timestamp.clone();
 
         // Create request body and calculate body hash
         let request_body = to_string(&request)?;

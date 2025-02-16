@@ -36,27 +36,29 @@ async fn main() -> Result<(), Box<dyn Error>> {
 
     // Example Transfer Request
     let transfer_request = TransferRequest {
-        customer_reference: "0000004".to_string(),
+        customer_reference: "54321".to_string(),
         sender_identity_number: "3515085211930002".to_string(),
-        source_account_no: "001901000613303".to_string(),
+        source_account_no: "001901000378301".to_string(),
         amount: Amount {
             value: "23000.00".to_string(),
             currency: "IDR".to_string(),
         },
         beneficiary_bank_code: "CENAIDJA".to_string(),
-        beneficiary_account_no: "2571075557".to_string(),
-        reference_no: "20220929BRINIDJA51050005403".to_string(),
-        external_id: "54445790453".to_string(),
-        transaction_date: transaction_date, // Ensure the timezone is included and correctly formattede timezone is included and correctly formatted
-        payment_info: Some("345345".to_string()),
+        beneficiary_account_no: "12345678900".to_string(),
+        reference_no: "20220127BRINIDJA61050000018".to_string(),
+        external_id: "53394951711".to_string(),
+        // transaction_date: transaction_date, // Ensure the timezone is included and correctly formattede timezone is included and correctly formatted
+        transaction_date: "2022-02-22T13:07:24Z".to_string(),
+        payment_info: Some("testing bifast".to_string()),
         sender_type: "01".to_string(),
         sender_resident_status: "01".to_string(),
         sender_town_name: "0300".to_string(),
         additional_info: Some(AdditionalInfo {
             device_id: "12345679237".to_string(),
             channel: "mobilephone".to_string(),
-            is_rdn: "true".to_string(),
-        }),
+            is_rdn: "false".to_string(),
+        })
+        // additional_info: None,
     };
 
 

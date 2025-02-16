@@ -69,27 +69,26 @@ API_PATH="/v2.0/transfer-bifast/payment-bifast"
 TRANSFER_TIMESTAMP=$(date -u +"%Y-%m-%dT%H:%M:%S").$(printf "%03d" $(( $(date +%N) / 1000000 )))Z
 
 TRANSFER_REQUEST_BODY='{
-  "customerReference": "0000004",
-  "senderIdentityNumber": "3515085211930002",
-  "sourceAccountNo": "001901000613303",
-  "amount": {
-    "value": "23000.00",
-    "currency": "IDR"
-  },
-  "beneficiaryBankCode": "CENAIDJA",
-  "beneficiaryAccountNo": "2571075557",
-  "referenceNo": "20220929BRINIDJA51050005403",
-  "externalId": "54445790453",
-  "transactionDate": "'"$TRANSFER_TIMESTAMP"'",
-  "paymentInfo": "Test Transfer",
-  "senderType": "01",
-  "senderResidentStatus": "01",
-  "senderTownName": "0300",
-  "additionalInfo": {
-    "deviceId": "12345679237",
-    "channel": "mobilephone",
-    "isrdn": "true"
-  }
+    "customerReference": "54321",
+    "senderIdentityNumber": "3515085211930002",
+    "sourceAccountNo": "001901000378301",
+    "amount": {
+        "value": "120000.00",
+        "currency": "IDR"
+    },
+    "beneficiaryBankCode": "CENAIDJA",
+    "beneficiaryAccountNo": "12345678900",
+    "referenceNo": "20220127BRINIDJA61050000018",
+    "externalId": "53394951711",
+    "transactionDate": "2022-02-22T13:07:24Z",
+    "paymentInfo": "testing bifast",
+    "senderType": "01",
+    "senderResidentStatus": "01",
+    "senderTownName": "0300",
+    "additionalInfo": {
+        "deviceId": "12345679237",
+        "channel": "mobilephone"
+    }
 }'
 echo "Transfer Request Body: $TRANSFER_REQUEST_BODY"
 
