@@ -36,15 +36,15 @@ async fn main() -> Result<(), Box<dyn Error>> {
 
     // Example Transfer Request
     let transfer_request = TransferRequest {
-        customer_reference: "54321".to_string(),
-        sender_identity_number: "3515085211930002".to_string(),
+        customer_reference: "543210".to_string(),
+        sender_identity_number: "35150852119300020".to_string(),
         source_account_no: "001901000378301".to_string(),
         amount: Amount {
             value: "23000.00".to_string(),
             currency: "IDR".to_string(),
         },
         beneficiary_bank_code: "CENAIDJA".to_string(),
-        beneficiary_account_no: "12345678900".to_string(),
+        beneficiary_account_no: "123456789001".to_string(),
         reference_no: "20220127BRINIDJA61050000018".to_string(),
         external_id: "53394951711".to_string(),
         // transaction_date: transaction_date, // Ensure the timezone is included and correctly formattede timezone is included and correctly formatted
