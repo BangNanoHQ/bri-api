@@ -7,6 +7,9 @@ PRIVATE_KEY=$PRIVATE_KEY_PATH
 CLIENT_KEY=$CLIENT_KEY
 CLIENT_SECRET=$CLIENT_SECRET
 
+# Set the timezone to Jakarta
+export TZ='Asia/Jakarta'
+export TZ
 
 # Set Arbitrary Sandbox Values
 PARTNER_ID="sandbox_partner_id"
@@ -108,3 +111,42 @@ TRANSFER_RESPONSE=$(curl -s -X POST "https://sandbox.partner.api.bri.co.id$API_P
   -d "$TRANSFER_REQUEST_BODY")
 
 echo "Transfer Response: $TRANSFER_RESPONSE"
+
+# Check Transaction Status
+echo "Performing Check transaction status..."
+API_PATH="/v2.0/transfer-bifast/check-status-bifast"
+
+
+CHECK_STATUS_REQUEST_BODY='
+{
+    "originalPartnerReferenceNo": "54321",
+    "serviceCode": "80",
+    "transactionDate": "22-02-2022"
+}'
+
+echo "Transfer Request Body: $CHECK_STATUS_REQUEST_BODY"
+
+CHECK_STATUS_REQUEST_BODY_CLEANED=$(echo -n "$CHECK_STATUS_REQUEST_BODY" | tr -d '\n' | jq -c .)
+
+# Generate the timestamp for the check status request
+CHECK_STATUS_TIMESTAMP=$(date -u +"%Y-%m-%dT%H:%M:%S").$(printf "%03d" $(( $(date +%N) / 1000000 )))Z
+
+# Calculate the body hash
+CHECK_STATUS_BODY_HASH=$(echo -n "$CHECK_STATUS_REQUEST_BODY_CLEANED" | openssl dgst -sha256 | awk '{print $2}' | tr '[:upper:]' '[:lower:]')
+
+# Generate the signature
+CHECK_STATUS_SIGNATURE=$(generate_signature "POST" "$API_PATH" "$ACCESS_TOKEN" "$CHECK_STATUS_BODY_HASH" "$CHECK_STATUS_TIMESTAMP" "$CLIENT_SECRET")
+
+# Perform the API call
+CHECK_STATUS_RESPONSE=$(curl -s -X POST "https://sandbox.partner.api.bri.co.id$API_PATH" \
+  -H "Authorization: Bearer $ACCESS_TOKEN" \
+  -H "Content-Type: application/json" \
+  -H "X-TIMESTAMP: $CHECK_STATUS_TIMESTAMP" \
+  -H "X-SIGNATURE: $CHECK_STATUS_SIGNATURE" \
+  -H "X-PARTNER-ID: $PARTNER_ID" \
+  -H "CHANNEL-ID: $CHANNEL_ID" \
+  -H "X-EXTERNAL-ID: $EXTERNAL_ID" \
+  -d "$CHECK_STATUS_REQUEST_BODY")
+
+echo "Check Status Response: $CHECK_STATUS_RESPONSE"
+
