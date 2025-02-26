@@ -1,3 +1,5 @@
+use std::collections::HashMap;
+
 use serde::{Deserialize, Serialize};
 use sha2::{Sha256, Sha512, Digest};
 use hmac::{Hmac, Mac};
@@ -142,6 +144,58 @@ impl BifastV2Client {
         }
 
         Ok(response.json::<TransferResponse>().await?)
+    }
+
+    pub async fn check_status(&self, request: CheckStatusRequest) -> Result<CheckStatusResponse, Box<dyn std::error::Error>> {
+        let access_token = self.auth_client.get_access_token().await?.access_token;
+
+        let api_path = "/v2.0/transfer-bifast/check-status-bifast";
+        let timestamp = chrono::Utc::now()
+            .format("%Y-%m-%dT%H:%M:%S")
+            .to_string() + &format!(".{:03}Z", chrono::Utc::now().timestamp_subsec_millis());
+
+        // Create request body and calculate body hash
+        let request_body = to_string(&request)?;
+        println!("Check Status Request body: {}", request_body);
+        let body_hash = {
+            let mut hasher = Sha256::new();
+            hasher.update(request_body.as_bytes());
+            format!("{:x}", hasher.finalize())
+        };
+
+        // Generate signature
+        let string_to_sign = format!(
+            "POST:{}:{}:{}:{}",
+            api_path, access_token, body_hash, timestamp
+        );
+
+        let signature = {
+            let mut mac = HmacSha512::new_from_slice(self.client_secret.as_bytes())
+                .expect("HMAC can take key of any size");
+            mac.update(string_to_sign.as_bytes());
+            format!("{:x}", mac.finalize().into_bytes())
+        };
+
+        // Make the API request
+        let response = self.client
+            .post(format!("{}{}", self.base_url, api_path))
+            .header("Authorization", format!("Bearer {}", access_token))
+            .header("Content-Type", "application/json")
+            .header("X-TIMESTAMP", &timestamp)
+            .header("X-SIGNATURE", signature)
+            .header("X-PARTNER-ID", &self.partner_id)
+            .header("CHANNEL-ID", &self.channel_id)
+            .header("X-EXTERNAL-ID", &self.external_id)
+            .json(&request)
+            .send()
+            .await?;
+
+        if !response.status().is_success() {
+            let error_text = response.text().await?;
+            return Err(format!("API request failed: {}", error_text).into());
+        }
+
+        Ok(response.json::<CheckStatusResponse>().await?)
     }
 }
 
@@ -381,6 +435,45 @@ pub struct TransferResponse {
     pub amount: Option<Amount>,
     pub source_account_no: Option<String>,
     pub additional_info: Option<AdditionalInfo>,
+}
+
+#[derive(Debug, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct CheckStatusRequest {
+    pub original_partner_reference_no: String,
+    pub service_code: String,
+    pub transaction_date: String,
+}
+
+#[derive(Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct CheckStatusResponse {
+    pub response_code: String,
+    pub response_message: String,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub original_partner_reference_no: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub original_reference_no: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub service_code: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub remark: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub transaction_date: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub source_account_no: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub beneficiary_account_no: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub reference_number: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub latest_transaction_status: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub transaction_status_desc: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub amount: Option<Amount>,
+    #[serde(default)]
+    pub additional_info: HashMap<String, String>,
 }
 
 
