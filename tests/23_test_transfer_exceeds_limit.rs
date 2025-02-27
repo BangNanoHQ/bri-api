@@ -31,9 +31,9 @@ async fn test_transfer_exceeds_limit() -> Result<(), Box<dyn std::error::Error>>
     let request = TransferRequest {
         customer_reference: "54321".to_string(),
         sender_identity_number: "3515085211930002".to_string(),
-        source_account_no: "88888".to_string(),
+        source_account_no: "99999".to_string(),
         amount: Amount {
-            value: "500000001.00".to_string(), // Exceeds 500M IDR limit
+            value: "120000.00".to_string(),
             currency: "IDR".to_string(),
         },
         beneficiary_bank_code: "CENAIDJA".to_string(),
@@ -66,8 +66,8 @@ async fn test_transfer_exceeds_limit() -> Result<(), Box<dyn std::error::Error>>
     
     // Convert the error to a string and verify it contains expected message
     let err_string = result.unwrap_err().to_string();
-    assert!(err_string.contains("4038015"));
-    assert!(err_string.contains("Exceeds Transfer Limit"));
+    assert!(err_string.contains("4038002"));
+    assert!(err_string.contains("Exceeds Transaction Amount Limit"));
 
     Ok(())
 }
