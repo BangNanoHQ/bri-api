@@ -37,19 +37,16 @@ async fn test_inquiry_missing_mandatory() -> Result<(), Box<dyn std::error::Erro
     println!("------------REQUEST------------");
     println!("{}", serde_json::to_string_pretty(&request)?);
 
-    // Send the inquiry request
-    let response = bifast_client.inquiry(request).await?;
-
-    // print the response body
-    println!("------------RESPONSE-----------");
-    println!("{}", serde_json::to_string_pretty(&response)?);
-
-    // Verify the response matches expected values from the test spec
-    assert_eq!(response.response_code, "4008102");
-    assert_eq!(
-        response.response_message,
-        "Invalid Mandatory Field beneficiaryAccountNo"
-    );
+    // Send the inquiry request and expect it to fail
+    let result = bifast_client.inquiry(request).await;
+    
+    // Verify we got an error
+    assert!(result.is_err());
+    
+    // Convert the error to a string and verify it contains expected message
+    let err_string = result.unwrap_err().to_string();
+    assert!(err_string.contains("4008102"));
+    assert!(err_string.contains("Invalid Mandatory Field beneficiaryAccountNo"));
 
     Ok(())
 }
