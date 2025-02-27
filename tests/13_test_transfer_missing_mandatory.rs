@@ -70,8 +70,8 @@ async fn test_transfer_missing_mandatory() -> Result<(), Box<dyn std::error::Err
     
     // Convert the error to a string and verify it contains expected message
     let err_string = result.unwrap_err().to_string();
-    assert!(err_string.contains("5008400"));
-    assert!(err_string.contains("Mandatory field cannot be empty"));
+    assert!(err_string.contains("4008002"));
+    assert!(err_string.contains("Invalid Mandatory Field customerReference"));
 
     Ok(())
 }

@@ -18,7 +18,7 @@ Positive
     "senderIdentityNumber": "3515085211930002",
     "sourceAccountNo": "001901000378301",
     "amount": {
-        "value": "12000.00",
+        "value": "15000.00",
         "currency": "IDR"
     },
     "beneficiaryBankCode": "",
@@ -31,7 +31,7 @@ Positive
     "senderResidentStatus": "01",
     "senderTownName": "0300",
     "additionalInfo": {
-        "isRdn": "true",
+        "isRdn":"true",
         "deviceId": "12345679237",
         "channel": "mobilephone"
     }

@@ -36,10 +36,10 @@ async fn test_transfer_valid_proxy_phone() -> Result<(), Box<dyn std::error::Err
             value: "15000.00".to_string(),
             currency: "IDR".to_string(),
         },
-        beneficiary_bank_code: "CENAIDJA".to_string(),
-        beneficiary_account_no: "+628123456789".to_string(),
-        reference_no: "20220127BRINIDJA61020000033".to_string(),
-        external_id: "24681357902".to_string(),
+        beneficiary_bank_code: "".to_string(),
+        beneficiary_account_no: "@6285733347342".to_string(),
+        reference_no: "20220127BRINIDJA61010000027".to_string(),
+        external_id: "13297730559".to_string(),
         transaction_date: "2022-02-22T13:07:24Z".to_string(),
         payment_info: Some("testing bifast".to_string()),
         sender_type: "01".to_string(),
@@ -68,8 +68,8 @@ async fn test_transfer_valid_proxy_phone() -> Result<(), Box<dyn std::error::Err
     assert_eq!(response.response_message, "Successful");
     assert_eq!(response.customer_reference, Some("77777".to_string()));
     assert_eq!(response.source_account_no, Some("001901000378301".to_string()));
-    assert_eq!(response.beneficiary_account_no, Some("+628123456789".to_string()));
-    assert_eq!(response.beneficiary_bank_code, Some("CENAIDJA".to_string()));
+    assert_eq!(response.beneficiary_account_no, Some("@6285733347342".to_string()));
+    assert_eq!(response.beneficiary_bank_code, None);
     assert!(!response.reference_no.is_none());
     assert!(!response.external_id.is_none());
     assert!(!response.journal_sequence.is_none());

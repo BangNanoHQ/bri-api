@@ -29,24 +29,24 @@ async fn test_transfer_invalid_format() -> Result<(), Box<dyn std::error::Error>
 
     // Create transfer request with invalid format
     let request = TransferRequest {
-        customer_reference: "77777".to_string(),
+        customer_reference: "999999999999999999999999999999999".to_string(),
         sender_identity_number: "3515085211930002".to_string(),
         source_account_no: "001901000378301".to_string(),
         amount: Amount {
-            value: "ABC".to_string(), // Invalid amount format
+            value: "10000.00".to_string(), // Invalid amount format
             currency: "IDR".to_string(),
         },
         beneficiary_bank_code: "CENAIDJA".to_string(),
         beneficiary_account_no: "12345678900".to_string(),
         reference_no: "20220127BRINIDJA61020000033".to_string(),
-        external_id: "24681357902".to_string(),
+        external_id: "53394951711".to_string(),
         transaction_date: "2022-02-22T13:07:24Z".to_string(),
         payment_info: Some("testing bifast".to_string()),
         sender_type: "01".to_string(),
         sender_resident_status: "01".to_string(),
         sender_town_name: "0300".to_string(),
         additional_info: Some(AdditionalInfo {
-            is_rdn: "true".to_string(),
+            is_rdn: "false".to_string(),
             device_id: "12345679237".to_string(),
             channel: "mobilephone".to_string(),
         }),
@@ -70,8 +70,8 @@ async fn test_transfer_invalid_format() -> Result<(), Box<dyn std::error::Error>
     
     // Convert the error to a string and verify it contains expected message
     let err_string = result.unwrap_err().to_string();
-    assert!(err_string.contains("5008401"));
-    assert!(err_string.contains("Invalid format"));
+    assert!(err_string.contains("4008001"));
+    assert!(err_string.contains("Invalid Field Format customerReference"));
 
     Ok(())
 }
