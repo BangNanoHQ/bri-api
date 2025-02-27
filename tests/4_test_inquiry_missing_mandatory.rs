@@ -42,6 +42,13 @@ async fn test_inquiry_missing_mandatory() -> Result<(), Box<dyn std::error::Erro
     
     // Verify we got an error
     assert!(result.is_err());
+
+    // print the response body
+    println!("------------RESPONSE-----------");
+    if let Err(err) = &result {
+        println!("{}", err);
+    }
+    
     
     // Convert the error to a string and verify it contains expected message
     let err_string = result.unwrap_err().to_string();
