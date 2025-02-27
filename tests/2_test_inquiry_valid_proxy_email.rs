@@ -33,8 +33,16 @@ async fn test_inquiry_valid_proxy_email() -> Result<(), Box<dyn std::error::Erro
         beneficiary_account_no: "@testing@gmail.com".to_string(),
     };
 
+    // print the request body
+    println!("------------REQUEST------------");
+    println!("{}", serde_json::to_string_pretty(&request)?);
+
     // Send the inquiry request
     let response = bifast_client.inquiry(request).await?;
+
+    // print the response body
+    println!("------------RESPONSE-----------");
+    println!("{}", serde_json::to_string_pretty(&response)?);
 
     // Verify the response matches expected values from the test spec
     assert_eq!(response.response_code, "2008100");

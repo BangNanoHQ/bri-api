@@ -363,7 +363,7 @@ pub struct InquiryRequest {
     pub beneficiary_account_no: String,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct InquiryResponse {
     pub response_code: String,
