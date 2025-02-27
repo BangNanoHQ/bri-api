@@ -12,6 +12,7 @@ Negative
 
 ## Request Body
 ```json
+
 {
     "customerReference": "54321",
     "senderIdentityNumber": "3515085211930002",
@@ -30,7 +31,7 @@ Negative
     "senderResidentStatus": "01",
     "senderTownName": "0300",
     "additionalInfo": {
-        "isRdn": "false",
+        "isRdn":"false",
         "deviceId": "12345679237",
         "channel": "mobilephone"
     }

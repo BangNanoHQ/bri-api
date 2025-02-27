@@ -4,7 +4,7 @@ use bri_api::{
 };
 
 #[tokio::test]
-async fn test_transfer_blocked_account() -> Result<(), Box<dyn std::error::Error>> {
+async fn test_transfer_insufficient_funds() -> Result<(), Box<dyn std::error::Error>> {
     // Load environment variables
     dotenv::from_filename(".env.dev").ok();
 
@@ -66,8 +66,8 @@ async fn test_transfer_blocked_account() -> Result<(), Box<dyn std::error::Error
     
     // Convert the error to a string and verify it contains expected message
     let err_string = result.unwrap_err().to_string();
-    assert!(err_string.contains("4038017"));
-    assert!(err_string.contains("Blocked Account"));
+    assert!(err_string.contains("4038014"));
+    assert!(err_string.contains("Insufficient Funds"));
 
     Ok(())
 }
