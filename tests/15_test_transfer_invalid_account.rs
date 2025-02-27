@@ -38,7 +38,7 @@ async fn test_transfer_invalid_account() -> Result<(), Box<dyn std::error::Error
         },
         beneficiary_bank_code: "CENAIDJA".to_string(),
         beneficiary_account_no: "11111".to_string(),
-        reference_no: "20220127BRINIDJA61050000018".to_string(),
+        reference_no: "20220128BRINIDJA61050000201".to_string(),
         external_id: "53394951711".to_string(),
         transaction_date: "2022-01-28T13:30:24Z".to_string(),
         payment_info: Some("testing bifast".to_string()),
@@ -70,7 +70,7 @@ async fn test_transfer_invalid_account() -> Result<(), Box<dyn std::error::Error
     
     // Convert the error to a string and verify it contains expected message
     let err_string = result.unwrap_err().to_string();
-    assert!(err_string.contains("4008011"));
+    assert!(err_string.contains("4048011"));
     assert!(err_string.contains("Invalid Card/Account/Customer [info]/Virtual Account"));
 
     Ok(())
