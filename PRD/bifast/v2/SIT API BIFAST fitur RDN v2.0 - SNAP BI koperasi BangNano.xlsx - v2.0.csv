@@ -1,0 +1,836 @@
+No,Endpoint,Test Case,Test Type,Sample Data,Expected Output Result,,Partner Result,,,"Partner Result
+(Pass / Fail)"
+,,,,,Response Code,All Body Response,Response API dari BRI (Mandatory),Response/Mappingan/Handling di sisi Partner (Mandatory),Image (API atau UI) (Mandatory),
+1,Inquiry Account BI Fast,"Valid Scenario (Inquiry Real Account)
+ 
+Petunjuk:
+Input semua field dengan data valid",Positif,"https://sandbox.partner.api.bri.co.id/v2.0/transfer-bifast/inquiry-bifast
+
+{
+    ""beneficiaryBankCode"": ""CENAIDJA"",
+    ""beneficiaryAccountNo"": ""99999""
+}",2008100,"{
+    ""responseCode"": ""2008100"",
+    ""responseMessage"": ""Successful"",
+    ""referenceNo"": ""20220127BRINIDJA61050000018"",
+    ""externalId"": ""53296848727"",
+    ""registrationId"": ""0001230075"",
+    ""receiverName"": ""KR DUMMY ACCOUNT TBXXXXXXXXXXXXXXXXXXXXX"",
+    ""beneficiaryAccountNo"": ""99999"",
+    ""beneficiaryBankCode"": ""CENAIDJA"",
+    ""beneficiaryAccountType"": ""SVGS"",
+    ""accountNumber"": ""020601000988301"",
+    ""receiverType"": ""02"",
+    ""receiverResidentStatus"": ""01"",
+    ""receiverIdentityNumber"": ""1216728398362819"",
+    ""receiverTownName"": ""0300"",
+    ""currency"": ""IDR""
+}",masukkan respon yang dikirimkan BRI ke partner,"masukkan respon mappingan yang sudah diset di partner yang ditampilkan ke user partner (jika tidak ada mappingan, masukkan keterangan ""tidak ada mapping di partner"")",masukkan screen capture UI hasil penjagaan partner atau request via postman,
+2,,"Valid Scenario (Inquiry Proxy Account (Email))
+
+Petunjuk:
+Input semua field dengan data valid",Positif,"{
+    ""beneficiaryBankCode"": """",
+    ""beneficiaryAccountNo"": ""@testing@gmail.com""
+}
+",2008100,"{
+    ""responseCode"": ""2008100"",
+    ""responseMessage"": ""Successful"",
+    ""referenceNo"": ""20220127BRINIDJA61010000026"",
+    ""externalId"": ""13297657619"",
+    ""registrationId"": ""0001230075"",
+    ""receiverName"": ""YAYASAN DHARMA BAKTI INDONESIA(Pemelik Rekening Kosong)"",
+    ""beneficiaryAccountNo"": ""@testing@gmail.com"",
+    ""beneficiaryBankCode"": ""BRINIDJA"",
+    ""beneficiaryAccountType"": ""SVGS"",
+    ""accountNumber"": ""020601000988301"",
+    ""receiverType"": ""01"",
+    ""receiverResidentStatus"": ""01"",
+    ""receiverIdentityNumber"": ""1216728398362819"",
+    ""receiverTownName"": ""0300"",
+    ""currency"": ""IDR""
+}",masukkan respon yang dikirimkan BRI ke partner,"masukkan respon mappingan yang sudah diset di partner yang ditampilkan ke user partner (jika tidak ada mappingan, masukkan keterangan ""tidak ada mapping di partner"")",masukkan screen capture UI hasil penjagaan partner atau request via postman,
+3,,"Valid Scenario Inquiry Proxy Account (No Hp)
+
+Petunjuk:
+Input semua field dengan data valid",Positif,"{
+    ""beneficiaryBankCode"": """",
+    ""beneficiaryAccountNo"": ""@6285733347342""
+}",2008100,"{
+    ""responseCode"": ""2008100"",
+    ""responseMessage"": ""Successful"",
+    ""referenceNo"": ""20220127BRINIDJA61010000027"",
+    ""externalId"": ""13297730559"",
+    ""registrationId"": ""0001230075"",
+    ""receiverName"": ""YAYASAN DHARMA BAKTI INDONESIA(Pemelik Rekening Kosong)"",
+    ""beneficiaryAccountNo"": ""@6285733347342"",
+    ""beneficiaryBankCode"": ""BRINIDJA"",
+    ""beneficiaryAccountType"": ""SVGS"",
+    ""accountNumber"": ""020601000988301"",
+    ""receiverType"": ""01"",
+    ""receiverResidentStatus"": ""01"",
+    ""receiverIdentityNumber"": ""1216728398362819"",
+    ""receiverTownName"": ""0300"",
+    ""currency"": ""IDR""
+}",masukkan respon yang dikirimkan BRI ke partner,"masukkan respon mappingan yang sudah diset di partner yang ditampilkan ke user partner (jika tidak ada mappingan, masukkan keterangan ""tidak ada mapping di partner"")",masukkan screen capture UI hasil penjagaan partner atau request via postman,
+4,,"Missing mandatory field
+
+Petunjuk:
+Mandatory field ada yang kosong",Negatif,"{
+    ""beneficiaryBankCode"": ""CENAIDJA"",
+    ""beneficiaryAccountNo"": """"
+}",4008102,"{
+    ""responseCode"": ""4008102"",
+    ""responseMessage"": ""Invalid Mandatory Field beneficiaryAccountNo""
+}",masukkan respon yang dikirimkan BRI ke partner,"masukkan respon mappingan yang sudah diset di partner yang ditampilkan ke user partner (jika tidak ada mappingan, masukkan keterangan ""tidak ada mapping di partner"")",masukkan screen capture UI hasil penjagaan partner atau request via postman,
+5,,"Invalid Field Format
+
+Petunjuk:
+Input value field dengan tipe data yang tidak sesuai atau melebihi jumlah karakter yang diijinkan",Negatif,"{
+    ""beneficiaryBankCode"": ""CENAIDJAO"",
+    ""beneficiaryAccountNo"": ""1234567890""
+}",4008101,"{
+    ""responseCode"": ""4008101"",
+    ""responseMessage"": ""Invalid Field Format beneficiaryBankCode""
+}",masukkan respon yang dikirimkan BRI ke partner,"masukkan respon mappingan yang sudah diset di partner yang ditampilkan ke user partner (jika tidak ada mappingan, masukkan keterangan ""tidak ada mapping di partner"")",masukkan screen capture UI hasil penjagaan partner atau request via postman,
+6,,"Invalid Card/Account/Customer [info]/Virtual Account
+
+Petunjuk : 
+Input beneficiaryAccountNo : 11111",Negatif,"{
+    ""beneficiaryBankCode"": ""CENAIDJA"",
+    ""beneficiaryAccountNo"": ""11111""
+}",4048111,"{
+    ""responseCode"": ""4048111"",
+    ""responseMessage"": ""Invalid Card/Account/Customer [info]/Virtual Account""
+}",masukkan respon yang dikirimkan BRI ke partner,"masukkan respon mappingan yang sudah diset di partner yang ditampilkan ke user partner (jika tidak ada mappingan, masukkan keterangan ""tidak ada mapping di partner"")",masukkan screen capture UI hasil penjagaan partner atau request via postman,
+7,,"Internal Server Error
+
+Petunjuk : 
+Input beneficiaryAccountNo : 22222",Negatif,"{
+    ""beneficiaryBankCode"": ""CENAIDJA"",
+    ""beneficiaryAccountNo"": ""22222""
+}",5008101,"{
+    ""responseCode"": ""5008101"",
+    ""responseMessage"": ""Internal Server Error""
+}",masukkan respon yang dikirimkan BRI ke partner,"masukkan respon mappingan yang sudah diset di partner yang ditampilkan ke user partner (jika tidak ada mappingan, masukkan keterangan ""tidak ada mapping di partner"")",masukkan screen capture UI hasil penjagaan partner atau request via postman,
+8,,"Timeout
+
+Petunjuk : 
+Input beneficiaryAccountNo : 44444",Negatif,"{
+    ""beneficiaryBankCode"": ""CENAIDJA"",
+    ""beneficiaryAccountNo"": ""44444""
+}",5048100,"{
+    ""responseCode"": ""5048100"",
+    ""responseMessage"": ""Timeout""
+}",masukkan respon yang dikirimkan BRI ke partner,"masukkan respon mappingan yang sudah diset di partner yang ditampilkan ke user partner (jika tidak ada mappingan, masukkan keterangan ""tidak ada mapping di partner"")",masukkan screen capture UI hasil penjagaan partner atau request via postman,
+9,,"General Error
+
+Petunjuk : 
+Input beneficiaryAccountNo : 33333",Negatif,"{
+    ""beneficiaryBankCode"": ""CENAIDJA"",
+    ""beneficiaryAccountNo"": ""33333""
+}",5008100,"{
+    ""responseCode"": ""5008100"",
+    ""responseMessage"": ""General Error""
+}",masukkan respon yang dikirimkan BRI ke partner,"masukkan respon mappingan yang sudah diset di partner yang ditampilkan ke user partner (jika tidak ada mappingan, masukkan keterangan ""tidak ada mapping di partner"")",masukkan screen capture UI hasil penjagaan partner atau request via postman,
+,,,,,,,,,,
+10,Transfer BI Fast,"Valid Scenario (menggunakan referenceNo,externalId dari Inquiry Real Account)
+
+Petunjuk:
+Input semua field dengan data valid
+transactionDate : ""2022-02-22T13:07:24Z""
+",Positif,"
+{
+    ""customerReference"": ""54321"",
+    ""senderIdentityNumber"": ""3515085211930002"",
+    ""sourceAccountNo"": ""001901000378301"",
+    ""amount"": {
+        ""value"": ""120000.00"",
+        ""currency"": ""IDR""
+    },
+    ""beneficiaryBankCode"": ""CENAIDJA"",
+    ""beneficiaryAccountNo"": ""12345678900"",
+    ""referenceNo"": ""20220127BRINIDJA61050000018"",
+    ""externalId"": ""53394951711"",
+    ""transactionDate"": ""2022-02-22T13:07:24Z"",
+    ""paymentInfo"": ""testing bifast"",
+    ""senderType"": ""01"",
+    ""senderResidentStatus"": ""01"",
+    ""senderTownName"": ""0300"",
+    ""additionalInfo"": {
+        ""isRdn"":""true"",
+        ""deviceId"": ""12345679237"",
+        ""channel"": ""mobilephone""
+    }
+}",2008000,"{
+    ""responseCode"": ""2008000"",
+    ""responseMessage"": ""Successful"",
+    ""customerReference"": ""54321"",
+    ""sourceAccountNo"": ""001901000378301"",
+    ""beneficiaryAccountNo"": ""12345678900"",
+    ""beneficiaryBankCode"": ""CENAIDJA"",
+    ""referenceNo"": ""20220128CENAIDJA1698678312816763100"",
+    ""externalId"": ""038455145464"",
+    ""journalSequence"": ""8292049"",
+    ""originalReferenceNo"": ""20220128BRINIDJA794224862497256"",
+    ""amount"": {
+        ""value"": ""120000.00"",
+        ""currency"": ""IDR""
+    }
+}",masukkan respon yang dikirimkan BRI ke partner,"masukkan respon mappingan yang sudah diset di partner yang ditampilkan ke user partner (jika tidak ada mappingan, masukkan keterangan ""tidak ada mapping di partner"")",masukkan screen capture UI hasil penjagaan partner atau request via postman,
+11,,"Valid Scenario (menggunakan referenceNo,externalId dari Inquiry Proxy Account (Email))
+Petunjuk:
+Input semua field dengan data valid
+transactionDate : ""2022-02-22T13:07:24Z""",Positif,"{
+    ""customerReference"": ""88888"",
+    ""senderIdentityNumber"": ""3515085211930002"",
+    ""sourceAccountNo"": ""001901000378301"",
+    ""amount"": {
+        ""value"": ""12000.00"",
+        ""currency"": ""IDR""
+    },
+    ""beneficiaryBankCode"": """",
+    ""beneficiaryAccountNo"": ""@testing@gmail.com"",
+    ""referenceNo"": ""20220127BRINIDJA61010000026"",
+    ""externalId"": ""13297657619"",
+    ""transactionDate"": ""2022-02-22T13:07:24Z"",
+    ""paymentInfo"": ""testing bifast"",
+    ""senderType"": ""01"",
+    ""senderResidentStatus"": ""01"",
+    ""senderTownName"": ""0300""
+    ""additionalInfo"": {
+        ""isRdn"":""true"",
+        ""deviceId"": ""12345679237"",
+        ""channel"": ""mobilephone""
+    }
+}",2008000,"{
+    ""responseCode"": ""2008000"",
+    ""responseMessage"": ""Successful"",
+    ""customerReference"": ""88888"",
+    ""sourceAccountNo"": ""001901000378301"",
+    ""beneficiaryAccountNo"": ""@testing@gmail.com"",
+    ""referenceNo"": ""20220128996328462262856287056344901"",
+    ""externalId"": ""532101278586"",
+    ""journalSequence"": ""4340807"",
+    ""originalReferenceNo"": ""20220128BRINIDJA211953675017267"",
+    ""amount"": {
+        ""value"": ""12000.00"",
+        ""currency"": ""IDR""
+    }
+}",masukkan respon yang dikirimkan BRI ke partner,"masukkan respon mappingan yang sudah diset di partner yang ditampilkan ke user partner (jika tidak ada mappingan, masukkan keterangan ""tidak ada mapping di partner"")",masukkan screen capture UI hasil penjagaan partner atau request via postman,
+12,,"Valid Scenario (menggunakan referenceNo,externalId dari Inquiry Proxy Account (nohp))
+
+Petunjuk:
+Input semua field dengan data valid
+transactionDate : ""2022-02-22T13:07:24Z""",Positif,"{
+    ""customerReference"": ""77777"",
+    ""senderIdentityNumber"": ""3515085211930002"",
+    ""sourceAccountNo"": ""001901000378301"",
+    ""amount"": {
+        ""value"": ""12000.00"",
+        ""currency"": ""IDR""
+    },
+    ""beneficiaryBankCode"": """",
+    ""beneficiaryAccountNo"": ""@6285733347342"",
+    ""referenceNo"": ""20220127BRINIDJA61010000027"",
+    ""externalId"": ""13297730559"",
+    ""transactionDate"": ""2022-02-22T13:07:24Z"",
+    ""paymentInfo"": ""testing bifast"",
+    ""senderType"": ""01"",
+    ""senderResidentStatus"": ""01"",
+    ""senderTownName"": ""0300""
+   ""additionalInfo"": {
+        ""isRdn"":""true"",
+        ""deviceId"": ""12345679237"",
+        ""channel"": ""mobilephone""
+    }
+}",2008000,"{
+    ""responseCode"": ""2008000"",
+    ""responseMessage"": ""Successful"",
+    ""customerReference"": ""77777"",
+    ""sourceAccountNo"": ""001901000378301"",
+    ""beneficiaryAccountNo"": ""@6285733347342"",
+    ""referenceNo"": ""20220128021710978140260165817498863"",
+    ""externalId"": ""875014615127"",
+    ""journalSequence"": ""0869256"",
+    ""originalReferenceNo"": ""20220128BRINIDJA514631900565000"",
+    ""amount"": {
+        ""value"": ""12000.00"",
+        ""currency"": ""IDR""
+    }
+}",masukkan respon yang dikirimkan BRI ke partner,"masukkan respon mappingan yang sudah diset di partner yang ditampilkan ke user partner (jika tidak ada mappingan, masukkan keterangan ""tidak ada mapping di partner"")",masukkan screen capture UI hasil penjagaan partner atau request via postman,
+13,,"Missing mandatory field
+
+Petunjuk:
+Mandatory field ada yang kosong",Negatif,"{
+    ""customerReference"": """",
+    ""senderIdentityNumber"": ""3515085211930002"",
+    ""sourceAccountNo"": ""001901000378301"",
+    ""amount"": {
+        ""value"": ""10000.00"",
+        ""currency"": ""IDR""
+    },
+    ""beneficiaryBankCode"": ""CENAIDJA"",
+    ""beneficiaryAccountNo"": ""12345678900"",
+    ""referenceNo"": ""20220127BRINIDJA61050000018"",
+    ""externalId"": ""53394951711"",
+    ""transactionDate"": ""2022-01-28T13:30:24Z"",
+    ""paymentInfo"": ""testing bifast"",
+    ""senderType"": ""01"",
+    ""senderResidentStatus"": ""01"",
+    ""senderTownName"": ""0300""
+    ""additionalInfo"": {
+        ""isRdn"":""false"",
+        ""deviceId"": ""12345679237"",
+        ""channel"": ""mobilephone""
+    }
+}",4008002,"{
+    ""responseCode"": ""4008002"",
+    ""responseMessage"": ""Invalid Mandatory Field customerReference""
+}",masukkan respon yang dikirimkan BRI ke partner,"masukkan respon mappingan yang sudah diset di partner yang ditampilkan ke user partner (jika tidak ada mappingan, masukkan keterangan ""tidak ada mapping di partner"")",masukkan screen capture UI hasil penjagaan partner atau request via postman,
+14,,"Invalid Field Format
+
+Petunjuk:
+Input value field dengan tipe data yang tidak sesuai atau melebihi jumlah karakter yang diijinkan",Negatif,"{
+    ""customerReference"": ""9999999999"",
+    ""senderIdentityNumber"": ""3515085211930002"",
+    ""sourceAccountNo"": ""001901000378301"",
+    ""amount"": {
+        ""value"": ""10000.00"",
+        ""currency"": ""IDR""
+    },
+    ""beneficiaryBankCode"": ""CENAIDJA"",
+    ""beneficiaryAccountNo"": ""12345678900"",
+    ""referenceNo"": ""20220127BRINIDJA61050000018"",
+    ""externalId"": ""53394951711"",
+    ""transactionDate"": ""2022-01-28T13:30:24Z"",
+    ""paymentInfo"": ""testing bifast"",
+    ""senderType"": ""01"",
+    ""senderResidentStatus"": ""01"",
+    ""senderTownName"": ""0300""
+    ""additionalInfo"": {
+        ""isRdn"":""false"",
+        ""deviceId"": ""12345679237"",
+        ""channel"": ""mobilephone""
+    }
+}",4008001,"{
+    ""responseCode"": ""4008001"",
+    ""responseMessage"": ""Invalid Field Format customerReference""
+}",masukkan respon yang dikirimkan BRI ke partner,"masukkan respon mappingan yang sudah diset di partner yang ditampilkan ke user partner (jika tidak ada mappingan, masukkan keterangan ""tidak ada mapping di partner"")",masukkan screen capture UI hasil penjagaan partner atau request via postman,
+15,,"Invalid Card/Account/Customer [info]/Virtual Account
+
+Petunjuk : 
+Input referenceNo: 20220128BRINIDJA61050000201",Negatif,"{
+    ""customerReference"": ""64543243"",
+    ""senderIdentityNumber"": ""3515085211930002"",
+    ""sourceAccountNo"": ""001901000378301"",
+    ""amount"": {
+        ""value"": ""10000.00"",
+        ""currency"": ""IDR""
+    },
+    ""beneficiaryBankCode"": ""CENAIDJA"",
+    ""beneficiaryAccountNo"": ""12345678900"",
+    ""referenceNo"": ""20220128BRINIDJA61050000201"",
+    ""externalId"": ""53394951711"",
+    ""transactionDate"": ""2022-01-28T13:30:24Z"",
+    ""paymentInfo"": ""testing bifast"",
+    ""senderType"": ""01"",
+    ""senderResidentStatus"": ""01"",
+    ""senderTownName"": ""0300""
+    ""additionalInfo"": {
+        ""isRdn"":""false"",
+        ""deviceId"": ""12345679237"",
+        ""channel"": ""mobilephone""
+    }
+}",4048011,"{
+    ""responseCode"": ""4048011"",
+    ""responseMessage"": ""Invalid Card/Account/Customer [info]/Virtual Account""
+}",masukkan respon yang dikirimkan BRI ke partner,"masukkan respon mappingan yang sudah diset di partner yang ditampilkan ke user partner (jika tidak ada mappingan, masukkan keterangan ""tidak ada mapping di partner"")",masukkan screen capture UI hasil penjagaan partner atau request via postman,
+16,,"Transaction Not Permitted
+
+Petunjuk : 
+Input sourceAccountNo: 13650
+
+note : reason pada respon akan muncul sesuai case",Negatif,"{
+    ""customerReference"": ""567876"",
+    ""senderIdentityNumber"": ""3515085211930002"",
+    ""sourceAccountNo"": ""13650"",
+    ""amount"": {
+        ""value"": ""10000.00"",
+        ""currency"": ""IDR""
+    },
+    ""beneficiaryBankCode"": ""CENAIDJA"",
+    ""beneficiaryAccountNo"": ""12345678900"",
+    ""referenceNo"": ""20220127BRINIDJA61050000018"",
+    ""externalId"": ""53394951711"",
+    ""transactionDate"": ""2022-01-28T13:30:24Z"",
+    ""paymentInfo"": ""testing bifast"",
+    ""senderType"": ""01"",
+    ""senderResidentStatus"": ""01"",
+    ""senderTownName"": ""0300""
+    ""additionalInfo"": {
+        ""isRdn"":""false"",
+        ""deviceId"": ""12345679237"",
+        ""channel"": ""mobilephone""
+    }
+}",4038015,"{
+    ""responseCode"": ""4038015"",
+    ""responseMessage"": ""Transaction Not Permitted. [Reason]""
+}",masukkan respon yang dikirimkan BRI ke partner,"masukkan respon mappingan yang sudah diset di partner yang ditampilkan ke user partner (jika tidak ada mappingan, masukkan keterangan ""tidak ada mapping di partner"")",masukkan screen capture UI hasil penjagaan partner atau request via postman,
+17,,"Conflict
+
+Petunjuk : 
+Input customerReference: 99999",Negatif,"{
+    ""customerReference"": ""99999"",
+    ""senderIdentityNumber"": ""3515085211930002"",
+    ""sourceAccountNo"": ""001901000378301"",
+    ""amount"": {
+        ""value"": ""10000.00"",
+        ""currency"": ""IDR""
+    },
+    ""beneficiaryBankCode"": ""CENAIDJA"",
+    ""beneficiaryAccountNo"": ""12345678900"",
+    ""referenceNo"": ""20220127BRINIDJA61050000018"",
+    ""externalId"": ""53394951711"",
+    ""transactionDate"": ""2022-01-28T13:30:24Z"",
+    ""paymentInfo"": ""testing bifast"",
+    ""senderType"": ""01"",
+    ""senderResidentStatus"": ""01"",
+    ""senderTownName"": ""0300""
+    ""additionalInfo"": {
+        ""isRdn"":""false"",
+        ""deviceId"": ""12345679237"",
+        ""channel"": ""mobilephone""
+    }
+}",4098000,"{
+    ""responseCode"": ""4098000"",
+    ""responseMessage"": ""Conflict""
+}",masukkan respon yang dikirimkan BRI ke partner,"masukkan respon mappingan yang sudah diset di partner yang ditampilkan ke user partner (jika tidak ada mappingan, masukkan keterangan ""tidak ada mapping di partner"")",masukkan screen capture UI hasil penjagaan partner atau request via postman,
+18,,"Suspend Transaction
+
+Petunjuk : 
+Input sourceAccountNo: 1234567890",Negatif,"{
+    ""customerReference"": ""123456789"",
+    ""senderIdentityNumber"": ""3515085211930002"",
+    ""sourceAccountNo"": ""1234567890"",
+    ""amount"": {
+        ""value"": ""10000.00"",
+        ""currency"": ""IDR""
+    },
+    ""beneficiaryBankCode"": ""CENAIDJA"",
+    ""beneficiaryAccountNo"": ""99999"",
+    ""referenceNo"": ""20220127BRINIDJA61050000018"",
+    ""externalId"": ""53394951711"",
+    ""transactionDate"": ""2022-01-28T13:30:24Z"",
+    ""paymentInfo"": ""testing bifast"",
+    ""senderType"": ""01"",
+    ""senderResidentStatus"": ""01"",
+    ""senderTownName"": ""0300""
+    ""additionalInfo"": {
+        ""isRdn"":""false"",
+        ""deviceId"": ""12345679237"",
+        ""channel"": ""mobilephone""
+    }
+}",4038016,"{
+    ""responseCode"": ""4038016"",
+    ""responseMessage"": ""Suspend Transaction""
+}",masukkan respon yang dikirimkan BRI ke partner,"masukkan respon mappingan yang sudah diset di partner yang ditampilkan ke user partner (jika tidak ada mappingan, masukkan keterangan ""tidak ada mapping di partner"")",masukkan screen capture UI hasil penjagaan partner atau request via postman,
+19,,"Invalid Amount
+
+petunjuk : 
+value tidak bisa kurang dari 10000.00",Negatif,"{
+    ""customerReference"": ""88888"",
+    ""senderIdentityNumber"": ""3515085211930002"",
+    ""sourceAccountNo"": ""13560"",
+    ""amount"": {
+        ""value"": ""23.00"",
+        ""currency"": ""IDR""
+    },
+    ""beneficiaryBankCode"": ""CENAIDJA"",
+    ""beneficiaryAccountNo"": ""55555"",
+    ""referenceNo"": ""20220127BRINIDJA61050000018"",
+    ""externalId"": ""53394951711"",
+    ""transactionDate"": ""2022-01-28T13:30:24Z"",
+    ""paymentInfo"": ""testing bifast"",
+    ""senderType"": ""01"",
+    ""senderResidentStatus"": ""01"",
+    ""senderTownName"": ""0300""
+    ""additionalInfo"": {
+        ""isRdn"":""false"",
+        ""deviceId"": ""12345679237"",
+        ""channel"": ""mobilephone""
+    }
+}",4048013,"{
+    ""responseCode"": ""4048013"",
+    ""responseMessage"": ""Invalid Amount""
+}",masukkan respon yang dikirimkan BRI ke partner,"masukkan respon mappingan yang sudah diset di partner yang ditampilkan ke user partner (jika tidak ada mappingan, masukkan keterangan ""tidak ada mapping di partner"")",masukkan screen capture UI hasil penjagaan partner atau request via postman,
+20,,"Inactive Card/Account/Customer
+
+Petunjuk : 
+Input sourceAccountNo: 66666",Negatif,"
+{
+    ""customerReference"": ""54321"",
+    ""senderIdentityNumber"": ""3515085211930002"",
+    ""sourceAccountNo"": ""66666"",
+    ""amount"": {
+        ""value"": ""120000.00"",
+        ""currency"": ""IDR""
+    },
+    ""beneficiaryBankCode"": ""CENAIDJA"",
+    ""beneficiaryAccountNo"": ""12345678900"",
+    ""referenceNo"": ""20220127BRINIDJA61050000018"",
+    ""externalId"": ""53394951711"",
+    ""transactionDate"": ""2022-02-22T13:07:24Z"",
+    ""paymentInfo"": ""testing bifast"",
+    ""senderType"": ""01"",
+    ""senderResidentStatus"": ""01"",
+    ""senderTownName"": ""0300"",
+    ""additionalInfo"": {
+        ""isRdn"":""false"",
+        ""deviceId"": ""12345679237"",
+        ""channel"": ""mobilephone""
+    }
+}",4038018,"{
+    ""responseCode"": ""4038018"",
+    ""responseMessage"": ""Inactive Card/Account/Customer""
+}",masukkan respon yang dikirimkan BRI ke partner,"masukkan respon mappingan yang sudah diset di partner yang ditampilkan ke user partner (jika tidak ada mappingan, masukkan keterangan ""tidak ada mapping di partner"")",masukkan screen capture UI hasil penjagaan partner atau request via postman,
+21,,"Dormant Account
+
+Petunjuk : 
+Input sourceAccountNo: 77777",Negatif,"
+{
+    ""customerReference"": ""54321"",
+    ""senderIdentityNumber"": ""3515085211930002"",
+    ""sourceAccountNo"": ""77777"",
+    ""amount"": {
+        ""value"": ""120000.00"",
+        ""currency"": ""IDR""
+    },
+    ""beneficiaryBankCode"": ""CENAIDJA"",
+    ""beneficiaryAccountNo"": ""12345678900"",
+    ""referenceNo"": ""20220127BRINIDJA61050000018"",
+    ""externalId"": ""53394951711"",
+    ""transactionDate"": ""2022-02-22T13:07:24Z"",
+    ""paymentInfo"": ""testing bifast"",
+    ""senderType"": ""01"",
+    ""senderResidentStatus"": ""01"",
+    ""senderTownName"": ""0300"",
+    ""additionalInfo"": {
+        ""isRdn"":""false"",
+        ""deviceId"": ""12345679237"",
+        ""channel"": ""mobilephone""
+    }
+}",4038009,"{
+    ""responseCode"": ""4038009"",
+    ""responseMessage"": ""Dormant Account""
+}",masukkan respon yang dikirimkan BRI ke partner,"masukkan respon mappingan yang sudah diset di partner yang ditampilkan ke user partner (jika tidak ada mappingan, masukkan keterangan ""tidak ada mapping di partner"")",masukkan screen capture UI hasil penjagaan partner atau request via postman,
+22,,"Insufficient Funds
+
+Petunjuk : 
+Input sourceAccountNo: 88888",Negatif,"
+{
+    ""customerReference"": ""54321"",
+    ""senderIdentityNumber"": ""3515085211930002"",
+    ""sourceAccountNo"": ""88888"",
+    ""amount"": {
+        ""value"": ""120000.00"",
+        ""currency"": ""IDR""
+    },
+    ""beneficiaryBankCode"": ""CENAIDJA"",
+    ""beneficiaryAccountNo"": ""12345678900"",
+    ""referenceNo"": ""20220127BRINIDJA61050000018"",
+    ""externalId"": ""53394951711"",
+    ""transactionDate"": ""2022-02-22T13:07:24Z"",
+    ""paymentInfo"": ""testing bifast"",
+    ""senderType"": ""01"",
+    ""senderResidentStatus"": ""01"",
+    ""senderTownName"": ""0300"",
+    ""additionalInfo"": {
+        ""isRdn"":""false"",
+        ""deviceId"": ""12345679237"",
+        ""channel"": ""mobilephone""
+    }
+}",4038014,"{
+    ""responseCode"": ""4038014"",
+    ""responseMessage"": ""Insufficient Funds""
+}",masukkan respon yang dikirimkan BRI ke partner,"masukkan respon mappingan yang sudah diset di partner yang ditampilkan ke user partner (jika tidak ada mappingan, masukkan keterangan ""tidak ada mapping di partner"")",masukkan screen capture UI hasil penjagaan partner atau request via postman,
+23,,"Exceeds Transaction Amount Limit
+
+Petunjuk : 
+Input sourceAccountNo: 99999
+",Negatif,"
+{
+    ""customerReference"": ""54321"",
+    ""senderIdentityNumber"": ""3515085211930002"",
+    ""sourceAccountNo"": ""99999"",
+    ""amount"": {
+        ""value"": ""120000.00"",
+        ""currency"": ""IDR""
+    },
+    ""beneficiaryBankCode"": ""CENAIDJA"",
+    ""beneficiaryAccountNo"": ""12345678900"",
+    ""referenceNo"": ""20220127BRINIDJA61050000018"",
+    ""externalId"": ""53394951711"",
+    ""transactionDate"": ""2022-02-22T13:07:24Z"",
+    ""paymentInfo"": ""testing bifast"",
+    ""senderType"": ""01"",
+    ""senderResidentStatus"": ""01"",
+    ""senderTownName"": ""0300"",
+    ""additionalInfo"": {
+        ""isRdn"":""false"",
+        ""deviceId"": ""12345679237"",
+        ""channel"": ""mobilephone""
+    }
+}",4038002,"{
+    ""responseCode"": ""4038002"",
+    ""responseMessage"": ""Exceeds Transaction Amount Limit""
+}",masukkan respon yang dikirimkan BRI ke partner,"masukkan respon mappingan yang sudah diset di partner yang ditampilkan ke user partner (jika tidak ada mappingan, masukkan keterangan ""tidak ada mapping di partner"")",masukkan screen capture UI hasil penjagaan partner atau request via postman,
+24,,"Unauthorized. Client
+
+Petunjuk : 
+Input sourceAccountNo: 66666",Negatif,"
+{
+    ""customerReference"": ""54321"",
+    ""senderIdentityNumber"": ""3515085211930002"",
+    ""sourceAccountNo"": ""66666"",
+    ""amount"": {
+        ""value"": ""120000.00"",
+        ""currency"": ""IDR""
+    },
+    ""beneficiaryBankCode"": ""CENAIDJA"",
+    ""beneficiaryAccountNo"": ""12345678900"",
+    ""referenceNo"": ""20220127BRINIDJA61050000018"",
+    ""externalId"": ""53394951711"",
+    ""transactionDate"": ""2022-02-22T13:07:24Z"",
+    ""paymentInfo"": ""testing bifast"",
+    ""senderType"": ""01"",
+    ""senderResidentStatus"": ""01"",
+    ""senderTownName"": ""0300"",
+    ""additionalInfo"": {
+        ""isRdn"":""false"",
+        ""deviceId"": ""12345679237"",
+        ""channel"": ""mobilephone""
+    }
+}",4018000,"{
+    ""responseCode"": ""4018000"",
+    ""responseMessage"": ""Unauthorized. Client""
+}",masukkan respon yang dikirimkan BRI ke partner,"masukkan respon mappingan yang sudah diset di partner yang ditampilkan ke user partner (jika tidak ada mappingan, masukkan keterangan ""tidak ada mapping di partner"")",masukkan screen capture UI hasil penjagaan partner atau request via postman,
+25,,"Duplicate customerReference
+
+Petunjuk : 
+Input sourceAccountNo: 44444",Negatif,"
+{
+    ""customerReference"": ""123456"",
+    ""senderIdentityNumber"": ""3515085211930002"",
+    ""sourceAccountNo"": ""44444"",
+    ""amount"": {
+        ""value"": ""120000.00"",
+        ""currency"": ""IDR""
+    },
+    ""beneficiaryBankCode"": ""CENAIDJA"",
+    ""beneficiaryAccountNo"": ""12345678900"",
+    ""referenceNo"": ""20220127BRINIDJA61050000018"",
+    ""externalId"": ""53394951711"",
+    ""transactionDate"": ""2022-02-22T13:07:24Z"",
+    ""paymentInfo"": ""testing bifast"",
+    ""senderType"": ""01"",
+    ""senderResidentStatus"": ""01"",
+    ""senderTownName"": ""0300"",
+    ""additionalInfo"": {
+        ""isRdn"":""false"",
+        ""deviceId"": ""12345679237"",
+        ""channel"": ""mobilephone""
+    }
+}",4098001,"{
+    ""responseCode"": ""4098001"",
+    ""responseMessage"": ""Duplicate customerReference""
+}",masukkan respon yang dikirimkan BRI ke partner,"masukkan respon mappingan yang sudah diset di partner yang ditampilkan ke user partner (jika tidak ada mappingan, masukkan keterangan ""tidak ada mapping di partner"")",masukkan screen capture UI hasil penjagaan partner atau request via postman,
+26,,"Timeout
+
+Petunjuk : 
+Input customerReference: 44444",Negatif,"{
+    ""customerReference"": ""44444"",
+    ""senderIdentityNumber"": ""3515085211930002"",
+    ""sourceAccountNo"": ""001901000378301"",
+    ""amount"": {
+        ""value"": ""10000.00"",
+        ""currency"": ""IDR""
+    },
+    ""beneficiaryBankCode"": ""CENAIDJA"",
+    ""beneficiaryAccountNo"": ""12345678900"",
+    ""referenceNo"": ""20220127BRINIDJA61050000018"",
+    ""externalId"": ""53394951711"",
+    ""transactionDate"": ""2022-01-28T13:30:24Z"",
+    ""paymentInfo"": ""testing bifast"",
+    ""senderType"": ""01"",
+    ""senderResidentStatus"": ""01"",
+    ""senderTownName"": ""0300""
+    ""additionalInfo"": {
+        ""isRdn"":""false"",
+        ""deviceId"": ""12345679237"",
+        ""channel"": ""mobilephone""
+    }
+}",5048000,"{
+    ""responseCode"": ""5048000"",
+    ""responseMessage"": ""Timeout""
+}",masukkan respon yang dikirimkan BRI ke partner,"masukkan respon mappingan yang sudah diset di partner yang ditampilkan ke user partner (jika tidak ada mappingan, masukkan keterangan ""tidak ada mapping di partner"")",masukkan screen capture UI hasil penjagaan partner atau request via postman,
+27,,"General Error
+
+Petunjuk : 
+Input customerReference: 33333",Negatif,"{
+    ""customerReference"": ""33333"",
+    ""senderIdentityNumber"": ""3515085211930002"",
+    ""sourceAccountNo"": ""001901000378301"",
+    ""amount"": {
+        ""value"": ""10000.00"",
+        ""currency"": ""IDR""
+    },
+    ""beneficiaryBankCode"": ""CENAIDJA"",
+    ""beneficiaryAccountNo"": ""12345678900"",
+    ""referenceNo"": ""20220127BRINIDJA61050000018"",
+    ""externalId"": ""53394951711"",
+    ""transactionDate"": ""2022-01-28T13:30:24Z"",
+    ""paymentInfo"": ""testing bifast"",
+    ""senderType"": ""01"",
+    ""senderResidentStatus"": ""01"",
+    ""senderTownName"": ""0300""
+    ""additionalInfo"": {
+        ""isRdn"":""false"",
+        ""deviceId"": ""12345679237"",
+        ""channel"": ""mobilephone""
+    }
+}",5008000,"{
+    ""responseCode"": ""5008000"",
+    ""responseMessage"": ""General Error""
+}",masukkan respon yang dikirimkan BRI ke partner,"masukkan respon mappingan yang sudah diset di partner yang ditampilkan ke user partner (jika tidak ada mappingan, masukkan keterangan ""tidak ada mapping di partner"")",masukkan screen capture UI hasil penjagaan partner atau request via postman,
+28,,"Internal Server Error
+
+Petunjuk : 
+Input customerReference: 22222",Negatif,"{
+    ""customerReference"": ""22222"",
+    ""senderIdentityNumber"": ""3515085211930002"",
+    ""sourceAccountNo"": ""001901000378301"",
+    ""amount"": {
+        ""value"": ""10000.00"",
+        ""currency"": ""IDR""
+    },
+    ""beneficiaryBankCode"": ""CENAIDJA"",
+    ""beneficiaryAccountNo"": ""12345678900"",
+    ""referenceNo"": ""20220127BRINIDJA61050000018"",
+    ""externalId"": ""53394951711"",
+    ""transactionDate"": ""2022-01-28T13:30:24Z"",
+    ""paymentInfo"": ""testing bifast"",
+    ""senderType"": ""01"",
+    ""senderResidentStatus"": ""01"",
+    ""senderTownName"": ""0300""
+}",5008001,"{
+    ""responseCode"": ""5008001"",
+    ""responseMessage"": ""Internal Server Error""
+}",masukkan respon yang dikirimkan BRI ke partner,"masukkan respon mappingan yang sudah diset di partner yang ditampilkan ke user partner (jika tidak ada mappingan, masukkan keterangan ""tidak ada mapping di partner"")",masukkan screen capture UI hasil penjagaan partner atau request via postman,
+,,,,,,,,,,
+29,Check Status Transaction,"Valid Scenario
+
+Petunjuk:
+Input semua field dengan data valid
+transactionDate: ""22-02-2022""",Positif,"https://sandbox.partner.api.bri.co.id/v2.0/transfer-bifast/check-status-bifast
+
+{
+    ""originalPartnerReferenceNo"": ""54321"",
+    ""serviceCode"": ""80"",
+    ""transactionDate"": ""22-02-2022""
+}",2008200,"{
+    ""responseCode"": ""2008200"",
+    ""responseMessage"": ""Successful"",
+    ""originalPartnerReferenceNo"": ""54321"",
+    ""originalReferenceNo"": ""20220128BRINIDJA902359667275093"",
+    ""serviceCode"": ""80"",
+    ""transactionDate"": ""2022-02-22T13:07:24Z"",
+    ""amount"": {
+        ""value"": ""120000.00"",
+        ""currency"": ""IDR""
+    },
+    ""referenceNumber"": ""ID2131925142835ST17241796"",
+    ""sourceAccountNo"": ""55555"",
+    ""beneficiaryAccountNo"": ""12345678900"",
+    ""remark"": ""2131925142835ST1"",
+    ""latestTransactionStatus"": ""00"",
+    ""transactionStatusDesc"": ""Payment success"",
+    ""additionalInfo"": {}
+}",masukkan respon yang dikirimkan BRI ke partner,"masukkan respon mappingan yang sudah diset di partner yang ditampilkan ke user partner (jika tidak ada mappingan, masukkan keterangan ""tidak ada mapping di partner"")",masukkan screen capture UI hasil penjagaan partner atau request via postman,
+30,,"Missing mandatory field
+
+Petunjuk:
+Mandatory field ada yang kosong",Negatif,"{
+    ""originalPartnerReferenceNo"": """",
+    ""serviceCode"": ""80"",
+    ""transactionDate"": ""16-09-2020""
+}",4008202,"{
+    ""responseCode"": ""4008202"",
+    ""responseMessage"": ""Invalid Mandatory Field originalPartnerReferenceNo""
+}",masukkan respon yang dikirimkan BRI ke partner,"masukkan respon mappingan yang sudah diset di partner yang ditampilkan ke user partner (jika tidak ada mappingan, masukkan keterangan ""tidak ada mapping di partner"")",masukkan screen capture UI hasil penjagaan partner atau request via postman,
+31,,"Invalid Field Format
+
+Petunjuk:
+Input value field dengan tipe data yang tidak sesuai atau melebihi jumlah karakter yang diijinkan",Negatif,"{
+    ""originalPartnerReferenceNo"": ""645432439999999999999"",
+    ""serviceCode"": ""80"",
+    ""transactionDate"": ""16-09-2020""
+}",4008201,"{
+    ""responseCode"": ""4008201"",
+    ""responseMessage"": ""Invalid Field Format originalPartnerReferenceNo""
+}",masukkan respon yang dikirimkan BRI ke partner,"masukkan respon mappingan yang sudah diset di partner yang ditampilkan ke user partner (jika tidak ada mappingan, masukkan keterangan ""tidak ada mapping di partner"")",masukkan screen capture UI hasil penjagaan partner atau request via postman,
+32,,"Internal Server Error
+
+Petunjuk : 
+Input originalPartnerReferenceNo: 22222",Negatif,"{
+    ""originalPartnerReferenceNo"": ""22222"",
+    ""serviceCode"": ""80"",
+    ""transactionDate"": ""16-09-2020""
+}",5008201,"{
+    ""responseCode"": ""5008201"",
+    ""responseMessage"": ""Internal Server Error""
+}",masukkan respon yang dikirimkan BRI ke partner,"masukkan respon mappingan yang sudah diset di partner yang ditampilkan ke user partner (jika tidak ada mappingan, masukkan keterangan ""tidak ada mapping di partner"")",masukkan screen capture UI hasil penjagaan partner atau request via postman,
+33,,"Transaction Not Found
+
+Petunjuk : 
+Input originalPartnerReferenceNo: 17010",Negatif,"{
+    ""originalPartnerReferenceNo"":""17010"",
+    ""serviceCode"": ""80"",
+    ""transactionDate"": ""16-09-2020""
+}",4048200,"{
+    ""responseCode"": ""4048200"",
+    ""responseMessage"": ""Invalid Transaction Status""
+}",masukkan respon yang dikirimkan BRI ke partner,"masukkan respon mappingan yang sudah diset di partner yang ditampilkan ke user partner (jika tidak ada mappingan, masukkan keterangan ""tidak ada mapping di partner"")",masukkan screen capture UI hasil penjagaan partner atau request via postman,
+34,,"Unauthorized. Client
+
+Petunjuk : 
+Input originalPartnerReferenceNo: 66666",Negatif,"{
+    ""originalPartnerReferenceNo"": ""66666"",
+    ""serviceCode"": ""80"",
+    ""transactionDate"": ""16-09-2020""
+}",4018200,"{
+    ""responseCode"": ""4018200"",
+    ""responseMessage"": ""Unauthorized. Client""
+}",masukkan respon yang dikirimkan BRI ke partner,"masukkan respon mappingan yang sudah diset di partner yang ditampilkan ke user partner (jika tidak ada mappingan, masukkan keterangan ""tidak ada mapping di partner"")",masukkan screen capture UI hasil penjagaan partner atau request via postman,
+35,,"Timeout
+
+Petunjuk : 
+Input originalPartnerReferenceNo: 44444",Negatif,"{
+    ""originalPartnerReferenceNo"": ""44444"",
+    ""serviceCode"": ""80"",
+    ""transactionDate"": ""16-09-2020""
+}",5048200,"{
+    ""responseCode"": ""5048200"",
+    ""responseMessage"": ""Timeout""
+}",masukkan respon yang dikirimkan BRI ke partner,"masukkan respon mappingan yang sudah diset di partner yang ditampilkan ke user partner (jika tidak ada mappingan, masukkan keterangan ""tidak ada mapping di partner"")",masukkan screen capture UI hasil penjagaan partner atau request via postman,
+36,,"General Error
+
+Petunjuk : 
+Input originalPartnerReferenceNo: 33333",Negatif,"{
+    ""originalPartnerReferenceNo"": ""33333"",
+    ""serviceCode"": ""80"",
+    ""transactionDate"": ""16-09-2020""
+}",5008200,"{
+    ""responseCode"": ""5008200"",
+    ""responseMessage"": ""General Error""
+}",masukkan respon yang dikirimkan BRI ke partner,"masukkan respon mappingan yang sudah diset di partner yang ditampilkan ke user partner (jika tidak ada mappingan, masukkan keterangan ""tidak ada mapping di partner"")",masukkan screen capture UI hasil penjagaan partner atau request via postman,
