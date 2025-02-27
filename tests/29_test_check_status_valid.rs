@@ -49,7 +49,7 @@ async fn test_check_status_valid() -> Result<(), Box<dyn std::error::Error>> {
     assert_eq!(response.response_code, "2008200");
     assert_eq!(response.response_message, "Successful");
     assert_eq!(response.original_partner_reference_no, Some("54321".to_string()));
-    assert_eq!(response.original_reference_no, Some("20220128BRINIDJA902359667275093".to_string()));
+    assert_eq!(response.original_reference_no, Some("20220128BRINIDJA369512651746837".to_string()));
     assert_eq!(response.service_code, Some("80".to_string()));
     assert_eq!(response.latest_transaction_status, Some("00".to_string()));
     assert_eq!(response.transaction_status_desc, Some("Payment success".to_string()));

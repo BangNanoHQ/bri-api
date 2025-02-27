@@ -30,7 +30,7 @@ Positive
     "responseCode": "2008200",
     "responseMessage": "Successful",
     "originalPartnerReferenceNo": "54321",
-    "originalReferenceNo": "20220128BRINIDJA902359667275093",
+    "originalReferenceNo": "20220128BRINIDJA369512651746837",
     "serviceCode": "80",
     "transactionDate": "2022-02-22T13:07:24Z",
     "amount": {
