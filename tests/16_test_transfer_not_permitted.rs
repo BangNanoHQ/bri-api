@@ -56,16 +56,18 @@ async fn test_transfer_not_permitted() -> Result<(), Box<dyn std::error::Error>>
     println!("------------REQUEST------------");
     println!("{}", serde_json::to_string_pretty(&request)?);
 
-    // Send the transfer request
-    let response = bifast_client.transfer(request).await?;
+    // Send the transfer request and expect it to fail
+    let result = bifast_client.transfer(request).await;
 
-    // print the response body
     println!("------------RESPONSE-----------");
-    println!("{}", serde_json::to_string_pretty(&response)?);
-
-    // Verify the response matches expected values from the test spec
-    assert_eq!(response.response_code, "4038015");
-    assert!(response.response_message.contains("Transaction Not Permitted"));
+    if let Err(err) = &result {
+        println!("{}", err);
+    }
+    
+    // Convert the error to a string and verify it contains expected message
+    let err_string = result.unwrap_err().to_string();
+    assert!(err_string.contains("4038015"));
+    assert!(err_string.contains("Transaction Not Permitted"));
 
     Ok(())
 }
