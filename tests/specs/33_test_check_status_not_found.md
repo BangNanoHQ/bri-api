@@ -13,7 +13,7 @@ Negative
 ## Request Body
 ```json
 {
-    "originalPartnerReferenceNo": "17010",
+    "originalPartnerReferenceNo":"17010",
     "serviceCode": "80",
     "transactionDate": "16-09-2020"
 }
