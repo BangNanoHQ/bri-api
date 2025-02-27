@@ -66,16 +66,16 @@ async fn test_transfer_valid_real_account() -> Result<(), Box<dyn std::error::Er
     // Verify the response matches expected values from the test spec
     assert_eq!(response.response_code, "2008000");
     assert_eq!(response.response_message, "Successful");
-    assert_eq!(response.customer_reference, "54321");
-    assert_eq!(response.source_account_no, "001901000378301");
-    assert_eq!(response.beneficiary_account_no, "12345678900");
-    assert_eq!(response.beneficiary_bank_code, "CENAIDJA");
-    assert!(!response.reference_no.is_empty());
-    assert!(!response.external_id.is_empty());
-    assert!(!response.journal_sequence.is_empty());
-    assert!(!response.original_reference_no.is_empty());
-    assert_eq!(response.amount.value, "120000.00");
-    assert_eq!(response.amount.currency, "IDR");
+    assert_eq!(response.customer_reference, Some("54321".to_string()));
+    assert_eq!(response.source_account_no, Some("001901000378301".to_string()));
+    assert_eq!(response.beneficiary_account_no, Some("12345678900".to_string()));
+    assert_eq!(response.beneficiary_bank_code, Some("CENAIDJA".to_string()));
+    assert!(!response.reference_no.is_none());
+    assert!(!response.external_id.is_none());
+    assert!(!response.journal_sequence.is_none());
+    assert!(!response.original_reference_no.is_none());
+    assert_eq!(response.amount.clone().unwrap().value, "120000.00");
+    assert_eq!(response.amount.clone().unwrap().currency, "IDR");
 
     Ok(())
 }

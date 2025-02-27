@@ -104,7 +104,7 @@ impl BifastV2Client {
 
         // Create request body and calculate body hash
         let request_body = to_string(&request)?;
-        println!("Request body: {}", request_body);
+        
         let body_hash = {
             let mut hasher = Sha256::new();
             hasher.update(request_body.as_bytes());
@@ -404,14 +404,14 @@ pub struct TransferRequest {
     pub additional_info: Option<AdditionalInfo>,
 }
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, Clone)]
 #[serde(rename_all = "camelCase")]
 pub struct Amount {
     pub value: String,
     pub currency: String,
 }
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, Clone)]
 #[serde(rename_all = "camelCase")]
 pub struct AdditionalInfo {
     pub device_id: String,
@@ -420,7 +420,7 @@ pub struct AdditionalInfo {
     pub is_rdn: String,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Serialize, Clone)]
 #[serde(rename_all = "camelCase")]
 pub struct TransferResponse {
     pub response_code: String,
@@ -445,7 +445,7 @@ pub struct CheckStatusRequest {
     pub transaction_date: String,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct CheckStatusResponse {
     pub response_code: String,
