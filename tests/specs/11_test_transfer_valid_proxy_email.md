@@ -22,7 +22,7 @@ Positive
         "currency": "IDR"
     },
     "beneficiaryBankCode": "CENAIDJA",
-    "beneficiaryAccountNo": "test@email.com",
+    "beneficiaryAccountNo": "@testing@gmail.com",
     "referenceNo": "20220127BRINIDJA61010000026",
     "externalId": "13297657619",
     "transactionDate": "2022-02-22T13:07:24Z",
@@ -49,7 +49,7 @@ Positive
     "responseMessage": "Successful",
     "customerReference": "88888",
     "sourceAccountNo": "001901000378301",
-    "beneficiaryAccountNo": "test@email.com",
+    "beneficiaryAccountNo": "@testing@gmail.com",
     "beneficiaryBankCode": "CENAIDJA",
     "referenceNo": "20220128996328462262856287056344901",
     "externalId": "532101278586",

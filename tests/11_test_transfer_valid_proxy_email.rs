@@ -37,7 +37,7 @@ async fn test_transfer_valid_proxy_email() -> Result<(), Box<dyn std::error::Err
             currency: "IDR".to_string(),
         },
         beneficiary_bank_code: "CENAIDJA".to_string(),
-        beneficiary_account_no: "test@email.com".to_string(),
+        beneficiary_account_no: "@testing@gmail.com".to_string(),
         reference_no: "20220127BRINIDJA61010000026".to_string(),
         external_id: "13297657619".to_string(),
         transaction_date: "2022-02-22T13:07:24Z".to_string(),
@@ -68,7 +68,7 @@ async fn test_transfer_valid_proxy_email() -> Result<(), Box<dyn std::error::Err
     assert_eq!(response.response_message, "Successful");
     assert_eq!(response.customer_reference, Some("88888".to_string()));
     assert_eq!(response.source_account_no, Some("001901000378301".to_string()));
-    assert_eq!(response.beneficiary_account_no, Some("test@email.com".to_string()));
+    assert_eq!(response.beneficiary_account_no, Some("@testing@gmail.com".to_string()));
     assert_eq!(response.beneficiary_bank_code, Some("CENAIDJA".to_string()));
     assert!(!response.reference_no.is_none());
     assert!(!response.external_id.is_none());
